@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using FinalGame.Collisions;
 using Microsoft.Xna.Framework.Input;
 using System.Xml.Linq;
+using System.Security.Policy;
+using FinalGame.StateManagement;
 
 namespace FinalGame
 {
@@ -41,15 +43,17 @@ namespace FinalGame
             attack = new Attack(this);
         }
 
-        public void Update(GameTime gameTime, List<Wall> walls)
+
+        public void HandleInput(GameTime gameTime, InputState input, List<Wall> walls)
         {
+
             keyboardState = Keyboard.GetState();
             priorMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
 
             int speed = 3;
 
-            Vector2 postitionChange = new Vector2(0,0);
+            Vector2 postitionChange = new Vector2(0, 0);
 
             if ((keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
                 && Position.Y > Radius) postitionChange += new Vector2(0, -speed);
@@ -73,9 +77,16 @@ namespace FinalGame
                 }
             }
 
-            // Post movement
+            
+
             Vector2 mouseDirection = new Vector2(currentMouseState.X - Position.X, currentMouseState.Y - Position.Y);
             Rotation = (float)Math.Atan2(mouseDirection.Y, mouseDirection.X);
+
+            if (currentMouseState.LeftButton == ButtonState.Pressed && priorMouseState.LeftButton == ButtonState.Released
+                && !attack.Active)
+            {
+                attack.StartAttack(mouseDirection);
+            }
 
             if (teleportGrenade.Fired)
             {
@@ -108,14 +119,17 @@ namespace FinalGame
                     mouseDirection
                     );
             }
+        }
 
+        public void Update(GameTime gameTime, List<Wall> walls)
+        {
             if (attack.Active)
             {
-                attack.Update(gameTime, mouseDirection);
+                attack.Update(gameTime, null);
             }
-            else if(currentMouseState.LeftButton == ButtonState.Pressed && priorMouseState.LeftButton == ButtonState.Released)
+            if (teleportGrenade.Fired)
             {
-                attack.StartAttack(mouseDirection);
+                teleportGrenade.Update(gameTime, walls);
             }
         }
 

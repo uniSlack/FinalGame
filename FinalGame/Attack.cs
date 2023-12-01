@@ -42,9 +42,9 @@ namespace FinalGame
             SetRotationAndPosition();
         }
 
-        public void Update(GameTime gameTime, Vector2 mouse)
+        public void Update(GameTime gameTime, Vector2? mouse)
         {
-            mouseDirection = mouse;
+            if (mouse != null) mouseDirection = (Vector2)mouse;
             SetRotationAndPosition();
             Countdown -= gameTime.ElapsedGameTime.TotalSeconds;
             if (Countdown <= 0)
