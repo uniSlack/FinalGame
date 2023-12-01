@@ -16,6 +16,7 @@ namespace FinalGame
         private List<Wall> walls = new List<Wall>();
         private List<Enemy> Enemies = new List<Enemy>();
         private Random r = new Random();
+        private bool enimiesAlive = true;
 
         public Game1()
         {
@@ -26,19 +27,19 @@ namespace FinalGame
 
         private void InitializeWalls()
         {
-            walls.Add(new Wall(new Vector2(200, 200), false, 150));
-            walls.Add(new Wall(new Vector2(100, 200), true, 150));
-            walls.Add(new Wall(new Vector2(300, 300), false, 150));
+            walls.Add(new Wall(new Vector2(500, 200), false, 150));
+            walls.Add(new Wall(new Vector2(400, 200), true, 150));
+            walls.Add(new Wall(new Vector2(600, 300), false, 150));
         }
 
         private void InitializeEnemies()
         {
-            Enemies.Add(new Enemy(new Vector2(600,300), 0f, player));
+            Enemies.Add(new Enemy(new Vector2(500,300), 0f, player));
         }
 
         protected override void Initialize()
         {
-            player = new Player(new Vector2(100, 100), 50);
+            player = new Player(new Vector2(100, 100));
 
             healthBar = new HealthBar();
 
@@ -59,11 +60,11 @@ namespace FinalGame
 
             foreach (Enemy e in Enemies)
             {
-                e.Texture = Content.Load<Texture2D>("Circle3");
+                e.Texture = Content.Load<Texture2D>("Circle4");
                 e.Bullet.texture = Content.Load<Texture2D>("TeleportGrenade");
             }
 
-            player.Texture = Content.Load<Texture2D>("Circle3");
+            player.Texture = Content.Load<Texture2D>("Circle4");
             player.teleportGrenade.texture = Content.Load<Texture2D>("TeleportGrenade");
             player.attack.Texture = Content.Load<Texture2D>("WhiteTexture");
 
@@ -81,27 +82,25 @@ namespace FinalGame
                 }
             }
 
+            if (!enimiesAlive)
+            {
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enimies!", "You Won!", MessageBoxButtons.OK);//end game;
+                if (dialogResult == DialogResult.OK)
+                {
+                    Exit();
+                }
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
                 Exit();
 
             player.Update(gameTime, walls);
 
+            enimiesAlive = false;
             foreach (Enemy e in Enemies)
             {
                 e.Update(gameTime, walls);
-                // check attack collision
-                if (player.attack.Active)
-                {
-                    if (player.attack.Bounds.CollidesWith(e.Bounds))
-                    {
-                        Vector2 playerToEnemy = new Vector2(player.Position.X - e.Position.X, player.Position.Y - e.Position.Y);
-                        float P2EAngle = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X);
-                        if (P2EAngle >= player.attack.Rotation - Math.PI/16 || P2EAngle <= player.attack.Rotation + Math.PI / 16)
-                        {
-                            e.Hit();
-                        }
-                    }
-               }
+                if (e.Alive) enimiesAlive = true;
             }
 
             

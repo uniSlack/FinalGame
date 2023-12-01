@@ -28,14 +28,13 @@ namespace FinalGame
         public Color color = Color.White;
         public float Rotation = 0;
 
-        public int Radius;
+        public int Radius = 20;
         public int Health = 3;
         
 
-        public Player(Vector2 position, int r)
+        public Player(Vector2 position)
         {
             Position = position;
-            Radius = r;
             Bounds = new BoundingCircle(position, Radius);
 
             teleportGrenade = new TeleportGrenade();

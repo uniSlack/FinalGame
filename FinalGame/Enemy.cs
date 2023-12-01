@@ -22,7 +22,7 @@ namespace FinalGame
         public float Rotation;
 
         public int ShotTimer;
-        public int Radius = 50;
+        public int Radius = 20;
 
         public Bullet Bullet;
         double BulletCooldownTimer;
@@ -45,26 +45,47 @@ namespace FinalGame
 
         public void Update(GameTime gameTime, List<Wall> walls)
         {
-                if (BulletCooldownTimer <= 0 && Alive)
+            //Vector2 playerToEnemy = new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y);
+            //Rotation = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X);
+
+            Vector2 playerToEnemy = new Vector2(Position.X - Player.Position.X, Position.Y - Player.Position.Y);
+            Rotation = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X) + (float)Math.PI;
+
+            //Vector2 test = new Vector2(0,)
+
+            // check attack collision
+            if (Player.attack.Active)
+            {
+                if (Player.attack.Bounds.CollidesWith(Bounds))
                 {
-                    Bullet.FireBullet(Position, Vector2.Normalize(new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y)) * BulletSpeed, Player);
-                    BulletCooldownTimer = BulletCooldownLength;
+
+                    if (Rotation - Math.PI>= Player.attack.Rotation - (Math.PI / 32) && Rotation - Math.PI <= Player.attack.Rotation +( Math.PI / 32))
+                    {
+                        Hit();
+                    }
                 }
-                else if (Bullet.Fired)
-                {
-                    Bullet.Update(gameTime, walls);
-                }
-                else
-                {
-                    BulletCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
-                }
+            }
+
+            if (BulletCooldownTimer <= 0 && Alive)
+            {
+                Bullet.FireBullet(Position, Vector2.Normalize(new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y)) * BulletSpeed, Player);
+                BulletCooldownTimer = BulletCooldownLength;
+            }
+            else if (Bullet.Fired)
+            {
+                Bullet.Update(gameTime, walls);
+            }
+            else
+            {
+                BulletCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (Alive)
             {
-                spriteBatch.Draw(Texture, Bounds.Center, null, Color.Red, 0,
+                spriteBatch.Draw(Texture, Bounds.Center, null, Color.Red, Rotation,
                 new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
             }
             
