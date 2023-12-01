@@ -122,12 +122,14 @@ namespace FinalGame
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Bounds.Center, null, color, 0, 
+            spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation, 
                 new Vector2(Radius,Radius), 1, SpriteEffects.None, 0);
             color = Color.White;
 
             if (teleportGrenade.Fired) teleportGrenade.Draw(gameTime, spriteBatch);
             if (attack.Active) attack.Draw(gameTime, spriteBatch);
+
+            
         }
 
         public void Hit()

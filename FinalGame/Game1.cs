@@ -12,6 +12,7 @@ namespace FinalGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player player;
+        private HealthBar healthBar;
         private List<Wall> walls = new List<Wall>();
         private List<Enemy> Enemies = new List<Enemy>();
         private Random r = new Random();
@@ -39,6 +40,8 @@ namespace FinalGame
         {
             player = new Player(new Vector2(100, 100), 50);
 
+            healthBar = new HealthBar();
+
             InitializeWalls();
             InitializeEnemies();
 
@@ -63,10 +66,21 @@ namespace FinalGame
             player.Texture = Content.Load<Texture2D>("Circle3");
             player.teleportGrenade.texture = Content.Load<Texture2D>("TeleportGrenade");
             player.attack.Texture = Content.Load<Texture2D>("WhiteTexture");
+
+            healthBar.Texture = Content.Load<Texture2D>("WhiteTexture");
         }
 
         protected override void Update(GameTime gameTime)
         {
+            if (player.Health <= 0)
+            {
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK);//end game;
+                if (dialogResult == DialogResult.OK)
+                {
+                    Exit();
+                }
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
                 Exit();
 
@@ -90,14 +104,7 @@ namespace FinalGame
                }
             }
 
-            if (player.Health <= 2)
-            {
-                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show( "Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK);//end game;
-                if (dialogResult == DialogResult.OK)
-                {
-                    Exit();
-                }
-            }
+            
                 
 
             base.Update(gameTime);
@@ -120,6 +127,8 @@ namespace FinalGame
             {
                 e.Draw(gameTime, _spriteBatch);
             }
+
+            healthBar.Draw(_spriteBatch, player.Health);
 
             _spriteBatch.End();
 
