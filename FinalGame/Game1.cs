@@ -84,7 +84,7 @@ namespace FinalGame
 
             if (!enimiesAlive)
             {
-                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enimies!", "You Won!", MessageBoxButtons.OK);//end game;
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK);//end game;
                 if (dialogResult == DialogResult.OK)
                 {
                     Exit();

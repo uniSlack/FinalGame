@@ -45,13 +45,8 @@ namespace FinalGame
 
         public void Update(GameTime gameTime, List<Wall> walls)
         {
-            //Vector2 playerToEnemy = new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y);
-            //Rotation = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X);
-
             Vector2 playerToEnemy = new Vector2(Position.X - Player.Position.X, Position.Y - Player.Position.Y);
             Rotation = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X) + (float)Math.PI;
-
-            //Vector2 test = new Vector2(0,)
 
             // check attack collision
             if (Player.attack.Active)
