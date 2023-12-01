@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace FinalGame
 {
@@ -66,13 +67,10 @@ namespace FinalGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
                 Exit();
 
             player.Update(gameTime, walls);
-
-            
-
 
             foreach (Enemy e in Enemies)
             {
@@ -91,6 +89,16 @@ namespace FinalGame
                     }
                }
             }
+
+            if (player.Health <= 2)
+            {
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show( "Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK);//end game;
+                if (dialogResult == DialogResult.OK)
+                {
+                    Exit();
+                }
+            }
+                
 
             base.Update(gameTime);
         }

@@ -29,6 +29,7 @@ namespace FinalGame
         public float Rotation = 0;
 
         public int Radius;
+        public int Health = 3;
         
 
         public Player(Vector2 position, int r)
@@ -132,6 +133,7 @@ namespace FinalGame
         public void Hit()
         {
             color = Color.Red;
+            Health--;
         }
 
         //private void UpdateMovement()
