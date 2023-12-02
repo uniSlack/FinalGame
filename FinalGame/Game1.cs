@@ -3,6 +3,7 @@ using FinalGame.StateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -15,6 +16,8 @@ namespace FinalGame
         private GraphicsDeviceManager _graphics;
         private readonly ScreenManager _screenManager;
 
+        private Song backgroundMusic;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,6 +29,10 @@ namespace FinalGame
 
             _screenManager = new ScreenManager(this);
             Components.Add(_screenManager);
+
+            backgroundMusic = Content.Load<Song>("Furious Freak");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(backgroundMusic);
 
             AddInitialScreens();
         }

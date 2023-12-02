@@ -64,12 +64,6 @@ namespace FinalGame.Screens
 
         public override void Activate()
         {
-            //System.Drawing.Rectangle bounds = new System.Drawing.Rectangle(5,
-            //    5,
-            //    Constants.GAME_WIDTH - 5,
-            //    Constants.GAME_HEIGHT - 5);
-            //System.Windows.Forms.Cursor.Clip = bounds;
-
             if (Content == null)
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
 

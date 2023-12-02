@@ -61,6 +61,12 @@
 /processorParam:TextureFormat=Color
 /build:Circle4.png
 
+#begin Furious Freak.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Furious Freak.mp3
+
 #begin SilkScreen.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
