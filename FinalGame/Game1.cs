@@ -35,7 +35,8 @@ namespace FinalGame
             //_screenManager.AddScreen(new BackgroundScreen(), null);
             //_screenManager.AddScreen(new MainMenuScreen(), null);
             //_screenManager.AddScreen(new SplashScreen(), null);
-            _screenManager.AddScreen(new GameplayScreen(), null);
+            _screenManager.AddScreen(new MainMenuScreen(), null);
+            //_screenManager.AddScreen(new GameplayScreen(), null);
         }
 
         protected override void Initialize()

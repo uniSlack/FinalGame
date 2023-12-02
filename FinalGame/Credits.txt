@@ -1,1 +1,2 @@
 ﻿All sprites and visual assets created in Pixlr web editor
+SilkScreen font by Jason Kottke at https://kottke.org/plus/type/silkscreen/index.html under open liscense

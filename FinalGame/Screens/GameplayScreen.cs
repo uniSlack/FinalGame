@@ -82,7 +82,7 @@ namespace FinalGame.Screens
             }
 
             player.Texture = Content.Load<Texture2D>("Circle4");
-            player.teleportGrenade.texture = Content.Load<Texture2D>("TeleportGrenade");
+            player.teleportGrenade.texture = Content.Load<Texture2D>("TeleportGrenadeV2");
             player.attack.Texture = Content.Load<Texture2D>("WhiteTexture");
 
             healthBar.Texture = Content.Load<Texture2D>("WhiteTexture");
