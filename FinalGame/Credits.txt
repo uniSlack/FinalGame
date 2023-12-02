@@ -3,3 +3,4 @@ SilkScreen font by Jason Kottke at https://kottke.org/plus/type/silkscreen/index
 "Furious Freak" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+Sound effects from Increpare's Bfxr http://www.bfxr.net
