@@ -56,7 +56,10 @@ namespace FinalGame.Screens
 
         private void LoadLevel(int level)
         {
+            int tempHealth = 3;
+            if (player != null)  tempHealth = player.Health;
             player = levels.PlayerPerLevel[CurrentLevel];
+            if (player != null) player.Health = tempHealth;
             healthBar = new HealthBar();
             walls = levels.WallsPerLevel[CurrentLevel];
             Enemies = levels.GetEnemiesPerLevel(CurrentLevel, player);
@@ -127,7 +130,9 @@ namespace FinalGame.Screens
                     DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK, MessageBoxIcon.None);//end game;
                     if (dialogResult == DialogResult.OK)
                     {
-                        ScreenManager.Game.Exit();
+                        //ScreenManager.Game.Exit();
+                        ScreenManager.RemoveScreen(this);
+                        ScreenManager.AddScreen(new MainMenuScreen(), null);
                     }
                 }
 
@@ -142,7 +147,9 @@ namespace FinalGame.Screens
                             LoadLevel(CurrentLevel);
                         } else
                         {
-                            ScreenManager.Game.Exit();
+                            //ScreenManager.Game.Exit();
+                            ScreenManager.RemoveScreen(this);
+                            ScreenManager.AddScreen(new MainMenuScreen(), null);
                         }
                         
 
@@ -222,8 +229,12 @@ namespace FinalGame.Screens
             if (currentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space) &&
                 !priorKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             {
-                CurrentLevel++;
-                LoadLevel(CurrentLevel);
+                if (CurrentLevel < levels.PlayerPerLevel.Count - 1)
+                {
+                    CurrentLevel++;
+                    LoadLevel(CurrentLevel);
+                    
+                }
             }
 
 
