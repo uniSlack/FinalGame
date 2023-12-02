@@ -1,7 +1,8 @@
 ﻿using System;
+using FinalGame.StateManagement;
 using Microsoft.Xna.Framework;
 
-namespace FinalGame.StateManagement
+namespace FinalGame.Screens
 {
     /// <summary>
     /// A screen is a single layer of game content that has
@@ -147,7 +148,7 @@ namespace FinalGame.StateManagement
         private bool UpdateTransitionPosition(GameTime gameTime, TimeSpan time, int direction)
         {
             // How much should we move by?
-            float transitionDelta = (time == TimeSpan.Zero)
+            float transitionDelta = time == TimeSpan.Zero
                 ? 1
                 : (float)(gameTime.ElapsedGameTime.TotalMilliseconds / time.TotalMilliseconds);
 

@@ -1,4 +1,5 @@
-﻿using FinalGame.StateManagement;
+﻿using FinalGame.Entities;
+using FinalGame.StateManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using static System.TimeZoneInfo;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FinalGame.Screens
 {
@@ -27,10 +29,16 @@ namespace FinalGame.Screens
         private List<Wall> walls = new List<Wall>();
         private List<Enemy> Enemies = new List<Enemy>();
         private Random r = new Random();
-        private bool enimiesAlive = true;
+        private bool enemiesAlive = true;
 
         private float _pauseAlpha;
         private readonly InputAction _pauseAction;
+
+        private int CurrentLevel = 0;
+        Levels levels = new Levels();
+
+        KeyboardState priorKeyboardState;
+        KeyboardState currentKeyboardState;
 
         public GameplayScreen()
         {
@@ -40,29 +48,28 @@ namespace FinalGame.Screens
             _pauseAction = new InputAction(
                 new[] { Buttons.Start, Buttons.Back },
                 new[] { Microsoft.Xna.Framework.Input.Keys.Back, Microsoft.Xna.Framework.Input.Keys.Escape }, true);
-            
-            player = new Player(new Vector2(100, 100));
 
+            LoadLevel(CurrentLevel);
+        }
+
+        private void LoadLevel(int level)
+        {
+            player = levels.PlayerPerLevel[CurrentLevel];
             healthBar = new HealthBar();
-
-            InitializeWalls();
-            InitializeEnemies();
-        }
-
-        private void InitializeWalls()
-        {
-            walls.Add(new Wall(new Vector2(500, 200), false, 150));
-            walls.Add(new Wall(new Vector2(400, 200), true, 150));
-            walls.Add(new Wall(new Vector2(600, 300), false, 150));
-        }
-
-        private void InitializeEnemies()
-        {
-            Enemies.Add(new Enemy(new Vector2(500, 300), 0f, player));
+            walls = levels.WallsPerLevel[CurrentLevel];
+            Enemies = levels.GetEnemiesPerLevel(CurrentLevel, player);
+            enemiesAlive = true;
+            if (level > 0) Activate();
         }
 
         public override void Activate()
         {
+            //System.Drawing.Rectangle bounds = new System.Drawing.Rectangle(5,
+            //    5,
+            //    Constants.GAME_WIDTH - 5,
+            //    Constants.GAME_HEIGHT - 5);
+            //System.Windows.Forms.Cursor.Clip = bounds;
+
             if (Content == null)
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
@@ -124,25 +131,35 @@ namespace FinalGame.Screens
                     }
                 }
 
-                if (!enimiesAlive)
+                if (!enemiesAlive)
                 {
                     DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK);//end game;
                     if (dialogResult == DialogResult.OK)
                     {
-                        ScreenManager.Game.Exit();
+                        if (CurrentLevel < levels.PlayerPerLevel.Count - 1)
+                        {
+                            CurrentLevel++;
+                            LoadLevel(CurrentLevel);
+                        } else
+                        {
+                            ScreenManager.Game.Exit();
+                        }
+                        
+
                     }
                 }
 
-                //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
-                    //Exit();
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed
+                    || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape)) ScreenManager.Game.Exit();
+
 
                 player.Update(gameTime, walls);
 
-                enimiesAlive = false;
+                enemiesAlive = false;
                 foreach (Enemy e in Enemies)
                 {
                     e.Update(gameTime, walls);
-                    if (e.Alive) enimiesAlive = true;
+                    if (e.Alive) enemiesAlive = true;
                 }
             }
         }
@@ -184,6 +201,9 @@ namespace FinalGame.Screens
 
         public override void HandleInput(GameTime gameTime, InputState input)
         {
+            priorKeyboardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
+
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
 
@@ -199,8 +219,14 @@ namespace FinalGame.Screens
             // on PC if they are playing with a keyboard and have no gamepad at all!
             bool gamePadDisconnected = !gamePadState.IsConnected && input.GamePadWasConnected[playerIndex];
 
-            
-            
+            if (currentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space) &&
+                !priorKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                CurrentLevel++;
+                LoadLevel(CurrentLevel);
+            }
+
+
             player.HandleInput(gameTime, input, walls);
         }
     }

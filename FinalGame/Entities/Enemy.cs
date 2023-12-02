@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
 using System.ComponentModel.Design;
 
-namespace FinalGame
+namespace FinalGame.Entities
 {
     public class Enemy
     {
@@ -21,14 +21,13 @@ namespace FinalGame
 
         public float Rotation;
 
-        public int ShotTimer;
         public int Radius = 20;
 
         public Bullet Bullet;
-        double BulletCooldownTimer;
+        public double BulletCooldownTimer;
         double BulletCooldownLength = 3;
         int BulletSpeed = 450;
-        
+
 
         Player Player;
 
@@ -54,7 +53,7 @@ namespace FinalGame
                 if (Player.attack.Bounds.CollidesWith(Bounds))
                 {
 
-                    if (Rotation - Math.PI>= Player.attack.Rotation - (Math.PI / 32) && Rotation - Math.PI <= Player.attack.Rotation +( Math.PI / 32))
+                    if (Rotation - Math.PI >= Player.attack.Rotation - Math.PI / 32 && Rotation - Math.PI <= Player.attack.Rotation + Math.PI / 32)
                     {
                         Hit();
                     }
@@ -83,7 +82,7 @@ namespace FinalGame
                 spriteBatch.Draw(Texture, Bounds.Center, null, Color.Red, Rotation,
                 new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
             }
-            
+
             if (Bullet.Fired) Bullet.Draw(gameTime, spriteBatch);
         }
 

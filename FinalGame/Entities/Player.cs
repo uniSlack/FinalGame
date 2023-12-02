@@ -10,8 +10,9 @@ using Microsoft.Xna.Framework.Input;
 using System.Xml.Linq;
 using System.Security.Policy;
 using FinalGame.StateManagement;
+using System.Transactions;
 
-namespace FinalGame
+namespace FinalGame.Entities
 {
     public class Player
     {
@@ -32,7 +33,9 @@ namespace FinalGame
 
         public int Radius = 20;
         public int Health = 3;
-        
+
+        public float colorBlinkTime = 10f;
+        public float colorBlinkTimer = 10f;
 
         public Player(Vector2 position)
         {
@@ -77,7 +80,7 @@ namespace FinalGame
                 }
             }
 
-            
+
 
             Vector2 mouseDirection = new Vector2(currentMouseState.X - Position.X, currentMouseState.Y - Position.Y);
             Rotation = (float)Math.Atan2(mouseDirection.Y, mouseDirection.X);
@@ -105,6 +108,7 @@ namespace FinalGame
                     {
                         if (potentialBounds.CollidesWith(w.Bounds))
                         {
+                            color = Color.Blue;
                             return;
                         }
                     }
@@ -135,14 +139,28 @@ namespace FinalGame
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation, 
-                new Vector2(Radius,Radius), 1, SpriteEffects.None, 0);
-            color = Color.White;
+            if (color != Color.White)
+            {
+                spriteBatch.Draw(Texture, Bounds.Center, null, Color.Lerp(Color.White, color, colorBlinkTimer/colorBlinkTime), Rotation,
+                new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
+                colorBlinkTimer -= .5f;
+                if (colorBlinkTimer <= 0 || color == Color.White) 
+                {
+                    colorBlinkTimer = colorBlinkTime;
+                    color= Color.White;
+                }
+            }
+            else
+            {
+                spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation,
+                new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
+            }
+            
 
             if (teleportGrenade.Fired) teleportGrenade.Draw(gameTime, spriteBatch);
             if (attack.Active) attack.Draw(gameTime, spriteBatch);
 
-            
+
         }
 
         public void Hit()
@@ -150,20 +168,5 @@ namespace FinalGame
             color = Color.Red;
             Health--;
         }
-
-        //private void UpdateMovement()
-        //{
-
-        //}
-
-        //private void UpdateTeleport()
-        //{
-
-        //}
-
-        //private void UpdateAttack()
-        //{
-
-        //}
     }
 }

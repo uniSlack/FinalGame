@@ -9,7 +9,7 @@ using FinalGame.Collisions;
 using Microsoft.Xna.Framework.Input;
 using System.Security.Policy;
 
-namespace FinalGame
+namespace FinalGame.Entities
 {
     public class TeleportGrenade
     {
@@ -60,13 +60,13 @@ namespace FinalGame
                 Velocity *= new Vector2(-1, 1);
 
             }
-                
+
             if (Position.Y < radius || Position.Y > Constants.GAME_HEIGHT - radius)
             {
                 Position -= Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Velocity *= new Vector2(1, -1);
             }
-                
+
             Velocity /= 1.01f;
         }
 
@@ -80,7 +80,7 @@ namespace FinalGame
         public Vector2 teleport()
         {
             Fired = false;
-            return this.Position;
+            return Position;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using System.Security.Policy;
 
-namespace FinalGame
+namespace FinalGame.Entities
 {
     public class Attack
     {
@@ -17,7 +17,7 @@ namespace FinalGame
         public Vector2 Position { get; set; }
 
         public bool Active = false;
-        public float ArcLength = (float)Math.PI/2;
+        public float ArcLength = (float)Math.PI / 2;
         public double Duration = .3;
         public double Countdown = 0;
         public BoundingCircle Bounds;
@@ -60,8 +60,8 @@ namespace FinalGame
                 new Rectangle((int)Position.X, (int)Position.Y, BeamWidth, BeamLength),
                 null,
                 Color.White,
-                Rotation - (float)Math.PI/2,
-                new Vector2(0,-(player.Radius * beamDistatnceFromPlayerScalar)),
+                Rotation - (float)Math.PI / 2,
+                new Vector2(0, -(player.Radius * beamDistatnceFromPlayerScalar)),
                 SpriteEffects.None,
                 0
                 );
@@ -69,7 +69,7 @@ namespace FinalGame
 
         private void SetRotationAndPosition()
         {
-            Rotation = player.Rotation  + (float)((ArcLength/2) - (ArcLength * (Countdown / Duration)));
+            Rotation = player.Rotation + (float)(ArcLength / 2 - ArcLength * (Countdown / Duration));
             Position = player.Position;
         }
     }

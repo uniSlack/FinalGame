@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalGame
+namespace FinalGame.Entities
 {
     public class HealthBar
     {
@@ -20,7 +20,7 @@ namespace FinalGame
         public void Draw(SpriteBatch spriteBatch, int health)
         {
             Position = PositionDefault;
-            for(int i = 0; i < health; i++)
+            for (int i = 0; i < health; i++)
             {
                 spriteBatch.Draw(Texture, new Rectangle((int)Position.X, (int)Position.Y, boxWidth, boxHeight), Color.Red);
                 Position += new Vector2(boxWidth + spacing, 0);
