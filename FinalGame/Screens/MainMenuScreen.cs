@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 namespace FinalGame.Screens
 {
-    // The main menu screen is the first thing displayed when the game starts up.
     public class MainMenuScreen : MenuScreen
     {
         public MainMenuScreen() : base("Exceed (demo)")
@@ -28,10 +27,11 @@ namespace FinalGame.Screens
                 "Left click to attack\n" +
                 "Mouse to aim\n" +
                 "Right click to throw teleport grenade, right click again to teleport to it\n" +
-                "Be warned, you can oly teleport where you fit!\n" +
+                "Be warned, you can only teleport where you fit!\n" +
                 "Space to skip levels\n" +
+                "Escape to quit" +
                 "Destroy all the red enemies before they shoot you three times to win.\n" +
-                "Good Luck!", "Tutorial", MessageBoxButtons.OK);
+                "Good Luck!", "Tutorial", MessageBoxButtons.OK,  MessageBoxIcon.None);
 
         }
 
@@ -42,11 +42,13 @@ namespace FinalGame.Screens
 
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Are you sure you want to exit?", "Message", MessageBoxButtons.OKCancel);//end game;
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Are you sure you want to exit?", "Message", MessageBoxButtons.OKCancel, MessageBoxIcon.None);//end game;
             if (dialogResult == DialogResult.OK)
             {
                 ScreenManager.Game.Exit();
-            } 
+            }
+
         }
+
     }
 }

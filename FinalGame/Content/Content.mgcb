@@ -74,6 +74,24 @@
 /processorParam:TextureFormat=Compressed
 /build:SilkScreen.spritefont
 
+#begin Swipe.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Swipe.wav
+
+#begin Swish2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Swish2.wav
+
+#begin TeleportFail.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:TeleportFail.wav
+
 #begin TeleportGrenade.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -97,6 +115,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TeleportGrenadeV2.png
+
+#begin TeleportSuccess.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:TeleportSuccess.wav
+
+#begin TempExplosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:TempExplosion.wav
 
 #begin WhiteTexture.png
 /importer:TextureImporter

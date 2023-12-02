@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Security.Policy;
 using FinalGame.StateManagement;
 using System.Transactions;
+using Microsoft.Xna.Framework.Audio;
 
 namespace FinalGame.Entities
 {
@@ -36,6 +37,12 @@ namespace FinalGame.Entities
 
         public float colorBlinkTime = 10f;
         public float colorBlinkTimer = 10f;
+
+        public SoundEffect AttackSound;
+        public SoundEffect TeleportFailSound;
+        public SoundEffect TeleportSuccessSound;
+        public SoundEffect HurtSound;
+
 
         public Player(Vector2 position)
         {
@@ -89,6 +96,7 @@ namespace FinalGame.Entities
                 && !attack.Active)
             {
                 attack.StartAttack(mouseDirection);
+                AttackSound.Play();
             }
 
             if (teleportGrenade.Fired)
@@ -108,10 +116,12 @@ namespace FinalGame.Entities
                     {
                         if (potentialBounds.CollidesWith(w.Bounds))
                         {
+                            TeleportFailSound.Play();
                             color = Color.Blue;
                             return;
                         }
                     }
+                    TeleportSuccessSound.Play();
                     Bounds = potentialBounds;
                     Position = potentialPosition;
                 }
@@ -165,6 +175,7 @@ namespace FinalGame.Entities
 
         public void Hit()
         {
+            HurtSound.Play();
             color = Color.Red;
             Health--;
         }

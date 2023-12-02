@@ -13,6 +13,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework.Audio;
+
 
 using static System.TimeZoneInfo;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -80,17 +82,21 @@ namespace FinalGame.Screens
             {
                 e.Texture = Content.Load<Texture2D>("Circle4");
                 e.Bullet.texture = Content.Load<Texture2D>("TeleportGrenade");
+                e.DeathSoundEffect = Content.Load<SoundEffect>("TempExplosion");
             }
 
             player.Texture = Content.Load<Texture2D>("Circle4");
             player.teleportGrenade.texture = Content.Load<Texture2D>("TeleportGrenadeV2");
             player.attack.Texture = Content.Load<Texture2D>("WhiteTexture");
+            player.AttackSound = Content.Load<SoundEffect>("Swish2");
+            player.TeleportFailSound = Content.Load<SoundEffect>("TeleportFail");
+            player.TeleportSuccessSound = Content.Load<SoundEffect>("TeleportSuccess");
+            player.HurtSound = Content.Load<SoundEffect>("Swipe");
 
             healthBar.Texture = Content.Load<Texture2D>("WhiteTexture");
+ 
 
-            // once the load has finished, we use ResetElapsedTime to tell the game's
-            // timing mechanism that we have just finished a very long frame, and that
-            // it should not try to catch up.
+
             ScreenManager.Game.ResetElapsedTime();
         }
 
@@ -118,7 +124,7 @@ namespace FinalGame.Screens
             {
                 if (player.Health <= 0)
                 {
-                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK);//end game;
+                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK, MessageBoxIcon.None);//end game;
                     if (dialogResult == DialogResult.OK)
                     {
                         ScreenManager.Game.Exit();
@@ -127,7 +133,7 @@ namespace FinalGame.Screens
 
                 if (!enemiesAlive)
                 {
-                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK);//end game;
+                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK, MessageBoxIcon.None);//end game;
                     if (dialogResult == DialogResult.OK)
                     {
                         if (CurrentLevel < levels.PlayerPerLevel.Count - 1)

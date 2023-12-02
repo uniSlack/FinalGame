@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
 using System.ComponentModel.Design;
+using Microsoft.Xna.Framework.Audio;
 
 namespace FinalGame.Entities
 {
@@ -28,6 +29,7 @@ namespace FinalGame.Entities
         double BulletCooldownLength = 3;
         int BulletSpeed = 450;
 
+        public SoundEffect DeathSoundEffect;
 
         Player Player;
 
@@ -88,6 +90,7 @@ namespace FinalGame.Entities
 
         public void Hit()
         {
+            DeathSoundEffect.Play();
             Alive = false;
         }
     }
