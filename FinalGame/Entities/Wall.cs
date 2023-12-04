@@ -29,7 +29,7 @@ namespace FinalGame.Entities
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, new Rectangle((int)Bounds.X, (int)Bounds.Y, (int)Bounds.Width, (int)Bounds.Height),
-            null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0);
+            null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
         }
     }
 }

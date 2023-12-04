@@ -63,7 +63,7 @@ namespace FinalGame.Entities
                 Rotation - (float)Math.PI / 2,
                 new Vector2(0, -(player.Radius * beamDistatnceFromPlayerScalar)),
                 SpriteEffects.None,
-                0
+                1
                 );
         }
 

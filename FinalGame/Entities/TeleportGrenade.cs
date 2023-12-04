@@ -74,7 +74,7 @@ namespace FinalGame.Entities
         {
             //TODO change color based on if you can tele?
             spriteBatch.Draw(texture, Bounds.Center, null, Color.White, 0,
-                new Vector2(radius, radius), .10f, SpriteEffects.None, 0);
+                new Vector2(radius, radius), .10f, SpriteEffects.None, 1);
         }
 
         public Vector2 teleport()

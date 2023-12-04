@@ -82,7 +82,7 @@ namespace FinalGame.Entities
             if (Alive)
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, Color.Red, Rotation,
-                new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
+                new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
             }
 
             if (Bullet.Fired) Bullet.Draw(gameTime, spriteBatch);

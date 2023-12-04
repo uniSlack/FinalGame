@@ -152,7 +152,7 @@ namespace FinalGame.Entities
             if (color != Color.White)
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, Color.Lerp(Color.White, color, colorBlinkTimer/colorBlinkTime), Rotation,
-                new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
+                new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
                 colorBlinkTimer -= .5f;
                 if (colorBlinkTimer <= 0 || color == Color.White) 
                 {
@@ -163,7 +163,7 @@ namespace FinalGame.Entities
             else
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation,
-                new Vector2(Radius, Radius), 1, SpriteEffects.None, 0);
+                new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
             }
             
 

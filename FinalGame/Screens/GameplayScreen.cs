@@ -26,10 +26,13 @@ namespace FinalGame.Screens
         private ContentManager Content;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
         private Player player;
         private HealthBar healthBar;
         private List<Wall> walls = new List<Wall>();
         private List<Enemy> Enemies = new List<Enemy>();
+        private Grid grid = new Grid();
+
         private Random r = new Random();
         private bool enemiesAlive = true;
 
@@ -97,8 +100,8 @@ namespace FinalGame.Screens
             player.HurtSound = Content.Load<SoundEffect>("Swipe");
 
             healthBar.Texture = Content.Load<Texture2D>("WhiteTexture");
- 
 
+            grid.Texture = Content.Load<Texture2D>("grid2");
 
             ScreenManager.Game.ResetElapsedTime();
         }
@@ -179,7 +182,7 @@ namespace FinalGame.Screens
             
             var spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack);
 
             player.Draw(gameTime, spriteBatch);
 
@@ -194,6 +197,8 @@ namespace FinalGame.Screens
             }
 
             healthBar.Draw(spriteBatch, player.Health);
+
+            grid.Draw(spriteBatch, player);
 
             spriteBatch.End();
 

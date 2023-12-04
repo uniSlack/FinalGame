@@ -64,7 +64,7 @@ namespace FinalGame.Entities
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Bounds.Center, null, Color.White, 0,
-                new Vector2(radius, radius), 1f, SpriteEffects.None, 0);
+                new Vector2(radius, radius), 1f, SpriteEffects.None, 1);
         }
     }
 }
