@@ -101,7 +101,8 @@ namespace FinalGame.Screens
 
             healthBar.Texture = Content.Load<Texture2D>("WhiteTexture");
 
-            grid.Texture = Content.Load<Texture2D>("grid2");
+            grid.GridTexture = Content.Load<Texture2D>("invertedGrid");
+            grid.BlurTexture = Content.Load<Texture2D>("blur");
 
             ScreenManager.Game.ResetElapsedTime();
         }
@@ -194,11 +195,12 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Draw(gameTime, spriteBatch);
+                //grid.Draw(spriteBatch, e.Position, Color.Red);
             }
 
             healthBar.Draw(spriteBatch, player.Health);
 
-            grid.Draw(spriteBatch, player);
+            grid.Draw(spriteBatch, player.Position, player.color);
 
             spriteBatch.End();
 

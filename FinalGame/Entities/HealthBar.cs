@@ -22,7 +22,8 @@ namespace FinalGame.Entities
             Position = PositionDefault;
             for (int i = 0; i < health; i++)
             {
-                spriteBatch.Draw(Texture, new Rectangle((int)Position.X, (int)Position.Y, boxWidth, boxHeight), Color.Red);
+                spriteBatch.Draw(Texture, new Rectangle((int)Position.X, (int)Position.Y, boxWidth, boxHeight), null,
+                    Color.Red, 0, new Vector2(0), SpriteEffects.None, 1);
                 Position += new Vector2(boxWidth + spacing, 0);
             }
         }

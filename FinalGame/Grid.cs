@@ -11,12 +11,16 @@ namespace FinalGame
 {
     public class Grid
     {
-        public Texture2D Texture;
+        public Texture2D GridTexture;
+        public Texture2D BlurTexture;
 
-        public void Draw(SpriteBatch spriteBatch, Player player)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
         {
-            Vector2 tempPosition = player.Position - new Vector2(Texture.Height/2,Texture.Width/2);
-            spriteBatch.Draw(Texture, tempPosition, null, Color.Blue, 0,
+            Vector2 tempPosition = position - new Vector2(BlurTexture.Height / 2, BlurTexture.Width / 2) ;
+            spriteBatch.Draw(GridTexture, tempPosition,
+                new Rectangle((int)position.X, (int)position.Y, BlurTexture.Height, BlurTexture.Width),
+                color, 0,new Vector2(0), 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(BlurTexture, tempPosition, null, Color.White, 0,
                 new Vector2(0), 1, SpriteEffects.None, 0);
         }
     }
