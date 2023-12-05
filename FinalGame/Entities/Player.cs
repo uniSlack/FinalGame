@@ -111,7 +111,12 @@ namespace FinalGame.Entities
                         potentialPosition.Y < Constants.GAME_HEIGHT - Radius &&
                         potentialPosition.X > Radius &&
                         potentialPosition.X < Constants.GAME_WIDTH - Radius)
-                        ) return;
+                        )
+                    {
+                        TeleportFailSound.Play();
+                        color = Color.Blue;
+                        return;
+                    }
                     foreach (Wall w in walls)
                     {
                         if (potentialBounds.CollidesWith(w.Bounds))
