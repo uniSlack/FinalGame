@@ -96,7 +96,7 @@ namespace FinalGame.Entities
                 && !attack.Active)
             {
                 attack.StartAttack(mouseDirection);
-                AttackSound.Play(.1f, 0, 0);
+                AttackSound.Play(.03f, 0, 0);
             }
 
             if (teleportGrenade.Fired)

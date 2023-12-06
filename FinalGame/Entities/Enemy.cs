@@ -90,7 +90,7 @@ namespace FinalGame.Entities
 
         public void Hit()
         {
-            DeathSoundEffect.Play(.1f, 0, 0);
+            DeathSoundEffect.Play(.05f, 0, 0);
             Alive = false;
         }
     }

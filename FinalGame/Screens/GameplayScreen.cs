@@ -197,7 +197,7 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Draw(gameTime, spriteBatch);
-                grid.Draw2(spriteBatch, e.Position, Color.Red, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
+                if (e.Alive) grid.Draw2(spriteBatch, e.Position, Color.Red, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
             }
 
             healthBar.Draw(spriteBatch, player.Health);
