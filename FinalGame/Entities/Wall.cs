@@ -18,12 +18,12 @@ namespace FinalGame.Entities
 
         public BoundingRectangle Bounds;
 
-        public Wall(Vector2 position, bool rotation, int l)
+        public Wall(Vector2 position, bool rotation, int l, int w)
         {
             Position = position;
             Rotation = rotation;
-            if (rotation) Bounds = new BoundingRectangle(position.X, Position.Y, 30, l);
-            else Bounds = new BoundingRectangle(position.X, Position.Y, l, 30);
+            if (rotation) Bounds = new BoundingRectangle(position.X, Position.Y, w, l);
+            else Bounds = new BoundingRectangle(position.X, Position.Y, l, w);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

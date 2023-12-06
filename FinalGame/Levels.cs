@@ -17,19 +17,19 @@ namespace FinalGame
         {
             new List<Wall>()
             {
-                new Wall(new Vector2(600, 0), true, 220),
-                new Wall(new Vector2(600, 260), true, 220)
+                new Wall(new Vector2(600, 0), true, 220, 30),
+                new Wall(new Vector2(600, 260), true, 220, 30)
             },
             new List<Wall>()
             {
-                new Wall(new Vector2(500, 200), false, 150),
-                new Wall(new Vector2(400, 200), true, 150),
-                new Wall(new Vector2(600, 300), false, 150)
+                new Wall(new Vector2(500, 200), false, 150, 30),
+                new Wall(new Vector2(400, 200), true, 150, 30),
+                new Wall(new Vector2(600, 300), false, 150, 30)
             },
             new List<Wall>()
             {
-                new Wall(new Vector2(350, 210), true, 100),
-                new Wall(new Vector2(450, 210), true, 100)
+                new Wall(new Vector2(320, 210), true, 100, 30),
+                new Wall(new Vector2(450, 210), true, 100, 30)
             }
         };
 
