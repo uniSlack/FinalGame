@@ -32,6 +32,7 @@ namespace FinalGame
 
             backgroundMusic = Content.Load<Song>("Furious Freak");
             MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = .5f;
             MediaPlayer.Play(backgroundMusic);
 
             AddInitialScreens();

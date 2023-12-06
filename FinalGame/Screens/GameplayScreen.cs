@@ -98,6 +98,7 @@ namespace FinalGame.Screens
             player.TeleportFailSound = Content.Load<SoundEffect>("TeleportFail");
             player.TeleportSuccessSound = Content.Load<SoundEffect>("TeleportSuccess");
             player.HurtSound = Content.Load<SoundEffect>("Swipe");
+            
 
             healthBar.Texture = Content.Load<Texture2D>("WhiteTexture");
 
@@ -196,14 +197,15 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Draw(gameTime, spriteBatch);
-                grid.Draw2(spriteBatch, e.Position, Color.Red, 200, 200, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
+                grid.Draw2(spriteBatch, e.Position, Color.Red, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
             }
 
             healthBar.Draw(spriteBatch, player.Health);
 
             //grid.Draw2();
             //grid.Draw(spriteBatch, player.Position, player.color);
-            grid.Draw2(spriteBatch, player.Position, player.color, 200, 200, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
+            grid.Draw2(spriteBatch, player.Position, player.color,new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
+            if (player.teleportGrenade.Fired) grid.Draw2(spriteBatch, player.teleportGrenade.Position, Color.Blue, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
 
             spriteBatch.End();
 

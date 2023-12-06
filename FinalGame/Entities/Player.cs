@@ -96,7 +96,7 @@ namespace FinalGame.Entities
                 && !attack.Active)
             {
                 attack.StartAttack(mouseDirection);
-                AttackSound.Play();
+                AttackSound.Play(.1f, 0, 0);
             }
 
             if (teleportGrenade.Fired)
@@ -113,7 +113,7 @@ namespace FinalGame.Entities
                         potentialPosition.X < Constants.GAME_WIDTH - Radius)
                         )
                     {
-                        TeleportFailSound.Play();
+                        TeleportFailSound.Play(.4f, 0, 0);
                         color = Color.Blue;
                         return;
                     }
@@ -121,12 +121,12 @@ namespace FinalGame.Entities
                     {
                         if (potentialBounds.CollidesWith(w.Bounds))
                         {
-                            TeleportFailSound.Play();
+                            TeleportFailSound.Play(.4f, 0, 0);
                             color = Color.Blue;
                             return;
                         }
                     }
-                    TeleportSuccessSound.Play();
+                    TeleportSuccessSound.Play(.4f, 0, 0);
                     Bounds = potentialBounds;
                     Position = potentialPosition;
                 }
@@ -180,7 +180,7 @@ namespace FinalGame.Entities
 
         public void Hit()
         {
-            HurtSound.Play();
+            HurtSound.Play(.1f, 0, 0);
             color = Color.Red;
             Health--;
         }

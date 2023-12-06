@@ -30,20 +30,14 @@ namespace FinalGame
                 new Vector2(0), 1, SpriteEffects.None, 0);
         }
 
-        public void Draw2(SpriteBatch spriteBatch, Vector2 position, Color color, int h, int w, Texture2D blankTexture)
+        public void Draw2(SpriteBatch spriteBatch, Vector2 position, Color color, Texture2D blankTexture)
         {
+            int w = blankTexture.Width;
+            int h = blankTexture.Height;
             Vector2 tempPosition = position - new Vector2(w / 2, h / 2);
-            //if (blur == null)
-            //{
             Color[] blur = new Color[w * h];
-                BlurTexture.GetData<Color>(0, 0, new Rectangle(0, 0, w, h), blur, 0, blur.Count());
-            //}
-            //if (grid == null)
-            //{
+            BlurTexture.GetData<Color>(0, 0, new Rectangle(0, 0, w, h), blur, 0, blur.Count());
             Color[] grid = new Color[w *h];
-            //}
-
-
             
             GridTexture.GetData<Color>(0, 0, new Rectangle((int)position.X, (int)position.Y, w, h), grid, 0, grid.Count());
             for (int i = 0; i < w; i++)
@@ -53,8 +47,8 @@ namespace FinalGame
                     grid[(i * 200) + j].A = (byte)(255 - blur[(i * 200) + j].A);
                 }
             }
+
             blankTexture.SetData<Color>(grid);
-            
             spriteBatch.Draw(blankTexture, position, null, color, 0,
                 new Vector2(w / 2, h / 2), 1, SpriteEffects.None, 0);
         }
