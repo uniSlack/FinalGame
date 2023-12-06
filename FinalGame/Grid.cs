@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using FinalGame.Entities;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using FinalGame.StateManagement;
+using System.Windows.Forms;
 
 namespace FinalGame
 {
@@ -13,6 +15,10 @@ namespace FinalGame
     {
         public Texture2D GridTexture;
         public Texture2D BlurTexture;
+        public Texture2D TempTexture;
+        //Color[] blur;
+        //Color[] grid;
+
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
         {
@@ -22,6 +28,35 @@ namespace FinalGame
                 color, 0,new Vector2(0), 1, SpriteEffects.None, 0);
             spriteBatch.Draw(BlurTexture, tempPosition, null, Color.White, 0,
                 new Vector2(0), 1, SpriteEffects.None, 0);
+        }
+
+        public void Draw2(SpriteBatch spriteBatch, Vector2 position, Color color, int h, int w, Texture2D blankTexture)
+        {
+            Vector2 tempPosition = position - new Vector2(w / 2, h / 2);
+            //if (blur == null)
+            //{
+            Color[] blur = new Color[w * h];
+                BlurTexture.GetData<Color>(0, 0, new Rectangle(0, 0, w, h), blur, 0, blur.Count());
+            //}
+            //if (grid == null)
+            //{
+            Color[] grid = new Color[w *h];
+            //}
+
+
+            
+            GridTexture.GetData<Color>(0, 0, new Rectangle((int)position.X, (int)position.Y, w, h), grid, 0, grid.Count());
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    grid[(i * 200) + j].A = (byte)(255 - blur[(i * 200) + j].A);
+                }
+            }
+            blankTexture.SetData<Color>(grid);
+            
+            spriteBatch.Draw(blankTexture, position, null, color, 0,
+                new Vector2(w / 2, h / 2), 1, SpriteEffects.None, 0);
         }
     }
 }

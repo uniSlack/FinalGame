@@ -103,6 +103,7 @@ namespace FinalGame.Screens
 
             grid.GridTexture = Content.Load<Texture2D>("invertedGrid");
             grid.BlurTexture = Content.Load<Texture2D>("blur");
+            grid.TempTexture = Content.Load<Texture2D>("blur");
 
             ScreenManager.Game.ResetElapsedTime();
         }
@@ -183,7 +184,7 @@ namespace FinalGame.Screens
             
             var spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack);
+            spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied) ;
 
             player.Draw(gameTime, spriteBatch);
 
@@ -195,12 +196,14 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Draw(gameTime, spriteBatch);
-                //grid.Draw(spriteBatch, e.Position, Color.Red);
+                grid.Draw2(spriteBatch, e.Position, Color.Red, 200, 200, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
             }
 
             healthBar.Draw(spriteBatch, player.Health);
 
-            grid.Draw(spriteBatch, player.Position, player.color);
+            //grid.Draw2();
+            //grid.Draw(spriteBatch, player.Position, player.color);
+            grid.Draw2(spriteBatch, player.Position, player.color, 200, 200, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
 
             spriteBatch.End();
 
