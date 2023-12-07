@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
 using System.ComponentModel.Design;
 using Microsoft.Xna.Framework.Audio;
+using System.Security.Policy;
+using System.IO;
 
 namespace FinalGame.Entities
 {
@@ -17,12 +19,16 @@ namespace FinalGame.Entities
         public bool Alive;
         public Texture2D Texture;
         public Vector2 Position { get; set; }
+        public List<Vector2> Path;
+        int currentStep = 0;
+        int nextStep = 1;
 
         public BoundingCircle Bounds;
 
         public float Rotation;
 
         public int Radius = 20;
+        public int Speed = 1;
 
         public Bullet Bullet;
         public double BulletCooldownTimer;
@@ -33,7 +39,7 @@ namespace FinalGame.Entities
 
         Player Player;
 
-        public Enemy(Vector2 position, float rotation, Player player)
+        public Enemy(Vector2 position, float rotation, Player player, List<Vector2> path)
         {
             Player = player;
             Position = position;
@@ -42,11 +48,41 @@ namespace FinalGame.Entities
             Bullet = new Bullet();
             BulletCooldownTimer = BulletCooldownLength;
             Alive = true;
+            if (path != null) Path = path;
+        }
+
+        private void IncrementStep()
+        {
+            currentStep = nextStep;
+            if (nextStep + 1 == Path.Count) nextStep = 0;
+            else nextStep++;
         }
 
         public void Update(GameTime gameTime, List<Wall> walls)
         {
-            Vector2 playerToEnemy = new Vector2(Position.X - Player.Position.X, Position.Y - Player.Position.Y);
+            if (Path != null)
+            {
+                //if (
+                //    (Position.X <= Path[nextStep].X + 5 &&
+                //    Position.X >= Path[nextStep].X - 5 ) &&
+                //    (Position.Y <= Path[nextStep].X + 5 &&
+                //    Position.Y >= Path[nextStep].X - 5)
+                //    )
+                if (Position == Path[nextStep])
+                {
+                    IncrementStep();
+                }
+                Vector2 potentialPosition = new Vector2(Path[nextStep].X - Path[currentStep].X, Path[nextStep].Y - Path[currentStep].Y);
+                potentialPosition.Normalize();
+                potentialPosition *= Speed;
+                Position += potentialPosition;
+                Bounds.Center = Position;
+
+
+            }
+
+                // end movement
+                Vector2 playerToEnemy = new Vector2(Position.X - Player.Position.X, Position.Y - Player.Position.Y);
             Rotation = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X) + (float)Math.PI;
 
             // check attack collision
