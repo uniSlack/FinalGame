@@ -18,5 +18,10 @@ namespace FinalGame
         /// The game height
         /// </summary>
         public static readonly int GAME_HEIGHT = 480;
+
+        public static float Scale = 1;
+
+        public static int DISPLAY_WIDTH = 800; 
+        public static int DISPLAY_HEIGHT = 480; 
     }
 }

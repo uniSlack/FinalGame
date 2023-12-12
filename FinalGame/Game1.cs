@@ -18,14 +18,21 @@ namespace FinalGame
 
         private Song backgroundMusic;
 
+        //public float Scale = 1f;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            //_graphics.IsFullScreen = true;
+            
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
+            
+            
             var screenFactory = new ScreenFactory();
             Services.AddService(typeof(IScreenFactory), screenFactory);
+
+            
 
             _screenManager = new ScreenManager(this);
             Components.Add(_screenManager);
@@ -45,6 +52,17 @@ namespace FinalGame
 
         protected override void Initialize()
         {
+            if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.AspectRatio == 5f / 3f ||
+                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.AspectRatio == 16f / 9f)
+            {
+                _graphics.IsFullScreen = true;   
+                _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                Constants.Scale = (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)Constants.GAME_WIDTH;
+                Constants.DISPLAY_HEIGHT = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                Constants.DISPLAY_WIDTH = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                _graphics.ApplyChanges();
+            }
             base.Initialize();
         }
 

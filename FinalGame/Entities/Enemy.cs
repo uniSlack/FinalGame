@@ -53,7 +53,7 @@ namespace FinalGame.Entities
         public Enemy(Vector2 position, float rotation, Player player, List<Vector2> path)
         {
             Player = player;
-            Position = position;
+            Position = position * Constants.Scale;
             Rotation = rotation;
             Bounds = new BoundingCircle(Position, Radius);
             for (int i = 0; i <= burstNumber; i++)

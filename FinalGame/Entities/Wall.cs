@@ -20,10 +20,10 @@ namespace FinalGame.Entities
 
         public Wall(Vector2 position, bool rotation, int l, int w)
         {
-            Position = position;
+            Position = position * Constants.Scale;
             Rotation = rotation;
-            if (rotation) Bounds = new BoundingRectangle(position.X, Position.Y, w, l);
-            else Bounds = new BoundingRectangle(position.X, Position.Y, l, w);
+            if (rotation) Bounds = new BoundingRectangle(Position.X, Position.Y, w * Constants.Scale, l * Constants.Scale);
+            else Bounds = new BoundingRectangle(Position.X, Position.Y, l * Constants.Scale, w * Constants.Scale);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

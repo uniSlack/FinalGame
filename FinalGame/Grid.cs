@@ -32,6 +32,7 @@ namespace FinalGame
 
         public void Draw2(SpriteBatch spriteBatch, Vector2 position, Color color, Texture2D blankTexture)
         {
+            position /= Constants.Scale;
             int w = blankTexture.Width;
             int h = blankTexture.Height;
             Vector2 tempPosition = position - new Vector2(w / 2, h / 2);
@@ -49,7 +50,7 @@ namespace FinalGame
             }
 
             blankTexture.SetData<Color>(grid);
-            spriteBatch.Draw(blankTexture, position, null, color, 0,
+            spriteBatch.Draw(blankTexture, position * Constants.Scale, null, color, 0,
                 new Vector2(w / 2, h / 2), 1, SpriteEffects.None, 0);
         }
     }

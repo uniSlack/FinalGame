@@ -54,14 +54,14 @@ namespace FinalGame.Entities
             Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Bounds.Center = Position;
 
-            if (Position.X < radius || Position.X > Constants.GAME_WIDTH - radius)
+            if (Position.X < radius || Position.X > Constants.DISPLAY_WIDTH - radius)
             {
                 Position -= Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Velocity *= new Vector2(-1, 1);
 
             }
 
-            if (Position.Y < radius || Position.Y > Constants.GAME_HEIGHT - radius)
+            if (Position.Y < radius || Position.Y > Constants.DISPLAY_HEIGHT - radius)
             {
                 Position -= Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Velocity *= new Vector2(1, -1);

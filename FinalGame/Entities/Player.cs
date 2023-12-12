@@ -46,8 +46,9 @@ namespace FinalGame.Entities
 
         public Player(Vector2 position)
         {
-            Position = position;
-            Bounds = new BoundingCircle(position, Radius);
+            Position = position * Constants.Scale;
+            //Radius = (int)((float)Radius * Constants.Scale);
+            Bounds = new BoundingCircle(Position, Radius);
 
             teleportGrenade = new TeleportGrenade();
             attack = new Attack(this);
@@ -68,11 +69,11 @@ namespace FinalGame.Entities
             if ((currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
                 && Position.Y > Radius) postitionChange += new Vector2(0, -speed);
             if ((currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
-                && Position.Y < Constants.GAME_HEIGHT - Radius) postitionChange += new Vector2(0, speed);
+                && Position.Y < Constants.DISPLAY_HEIGHT - Radius) postitionChange += new Vector2(0, speed);
             if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A))
                 && Position.X > Radius) postitionChange += new Vector2(-speed, 0);
             if ((currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
-                && Position.X < Constants.GAME_WIDTH - Radius) postitionChange += new Vector2(speed, 0);
+                && Position.X < Constants.DISPLAY_WIDTH - Radius) postitionChange += new Vector2(speed, 0);
 
             Position += postitionChange;
 
@@ -109,9 +110,9 @@ namespace FinalGame.Entities
                     BoundingCircle potentialBounds = new BoundingCircle(potentialPosition, Radius);
                     if (
                         !(potentialPosition.Y > Radius &&
-                        potentialPosition.Y < Constants.GAME_HEIGHT - Radius &&
+                        potentialPosition.Y < Constants.DISPLAY_HEIGHT - Radius &&
                         potentialPosition.X > Radius &&
-                        potentialPosition.X < Constants.GAME_WIDTH - Radius)
+                        potentialPosition.X < Constants.DISPLAY_WIDTH - Radius)
                         )
                     {
                         TeleportFailSound.Play(.4f, 0, 0);
