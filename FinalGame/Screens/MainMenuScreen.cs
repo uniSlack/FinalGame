@@ -6,7 +6,7 @@ namespace FinalGame.Screens
 {
     public class MainMenuScreen : MenuScreen
     {
-        public MainMenuScreen() : base("Exceed (demo)")
+        public MainMenuScreen() : base("Exceed")
         {
             var playGameMenuEntry = new MenuEntry("Play Game");
             var howToPlayMenuEntry = new MenuEntry("How To Play");
@@ -23,7 +23,7 @@ namespace FinalGame.Screens
 
         private void HowToPlayMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("WASD/Arrows to move\n" +
+            string message = "WASD/Arrows to move\n" +
                 "Left click to attack\n" +
                 "Mouse to aim\n" +
                 "Right click to throw teleport grenade, right click again to teleport to it\n" +
@@ -31,8 +31,10 @@ namespace FinalGame.Screens
                 "Space to skip levels\n" +
                 "Escape to quit\n" +
                 "Destroy all the red enemies before they shoot you three times to win.\n" +
-                "Good Luck!", "Tutorial", MessageBoxButtons.OK,  MessageBoxIcon.None);
+                "Good Luck!";
+            var tutorialMessageBox = new MessageBoxScreen(message) { Scale = .3f};
 
+            ScreenManager.AddScreen(tutorialMessageBox, null);
         }
 
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
@@ -42,12 +44,22 @@ namespace FinalGame.Screens
 
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Are you sure you want to exit?", "Message", MessageBoxButtons.OKCancel, MessageBoxIcon.None);//end game;
-            if (dialogResult == DialogResult.OK)
-            {
-                ScreenManager.Game.Exit();
-            }
+            //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Are you sure you want to exit?", "Message", MessageBoxButtons.OKCancel, MessageBoxIcon.None);//end game;
+            //if (dialogResult == DialogResult.OK)
+            //{
+            //    ScreenManager.Game.Exit();
+            //}
+            const string message = "Are you sure you want to exit?";
+            var confirmExitMessageBox = new MessageBoxScreen(message) { Scale = .4f};
 
+            confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
+
+            ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
+        }
+
+        private void ConfirmExitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.Game.Exit();
         }
 
     }

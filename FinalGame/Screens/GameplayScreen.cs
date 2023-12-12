@@ -119,6 +119,27 @@ namespace FinalGame.Screens
             Content.Unload();
         }
 
+        private void closeGameplay(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.RemoveScreen(this);
+            ScreenManager.AddScreen(new MainMenuScreen(), null);
+        }
+
+        private void handleEnemiesDead(object sender, PlayerIndexEventArgs e)
+        {
+            if (CurrentLevel < levels.PlayerPerLevel.Count - 1)
+            {
+                CurrentLevel++;
+                LoadLevel(CurrentLevel);
+            }
+            else
+            {
+                //ScreenManager.Game.Exit();
+                ScreenManager.RemoveScreen(this);
+                ScreenManager.AddScreen(new MainMenuScreen(), null);
+            }
+        }
+
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
@@ -133,33 +154,21 @@ namespace FinalGame.Screens
             {
                 if (player.Health <= 0)
                 {
-                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Game Over! Good luck next time!", "You Died!", MessageBoxButtons.OK, MessageBoxIcon.None);//end game;
-                    if (dialogResult == DialogResult.OK)
-                    {
-                        //ScreenManager.Game.Exit();
-                        ScreenManager.RemoveScreen(this);
-                        ScreenManager.AddScreen(new MainMenuScreen(), null);
-                    }
+                    var playerDiedMessageBox = new MessageBoxScreen("Game Over! Good luck next time!") { Scale = .3f };
+                    playerDiedMessageBox.Accepted += closeGameplay;
+                    playerDiedMessageBox.Cancelled += closeGameplay;
+                    ScreenManager.AddScreen(playerDiedMessageBox, null);
                 }
 
                 if (!enemiesAlive)
                 {
-                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK, MessageBoxIcon.None);//end game;
-                    if (dialogResult == DialogResult.OK)
-                    {
-                        if (CurrentLevel < levels.PlayerPerLevel.Count - 1)
-                        {
-                            CurrentLevel++;
-                            LoadLevel(CurrentLevel);
-                        } else
-                        {
-                            //ScreenManager.Game.Exit();
-                            ScreenManager.RemoveScreen(this);
-                            ScreenManager.AddScreen(new MainMenuScreen(), null);
-                        }
-                        
+                    var enemiesDeadMessageBox = new MessageBoxScreen("Good Job! You defeated all the enemies!") { Scale = .3f };
+                    //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK, MessageBoxIcon.None);
 
-                    }
+                    enemiesDeadMessageBox.Accepted += handleEnemiesDead;
+                    enemiesDeadMessageBox.Cancelled += closeGameplay;
+
+                    ScreenManager.AddScreen(enemiesDeadMessageBox, null);
                 }
 
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed
