@@ -163,13 +163,24 @@ namespace FinalGame.Screens
 
                 if (!enemiesAlive)
                 {
-                    var enemiesDeadMessageBox = new MessageBoxScreen("Good Job! You defeated all the enemies!") { Scale = .3f * Constants.Scale };
-                    //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    if (CurrentLevel == levels.PlayerPerLevel.Count - 1)
+                    {
+                        var escapedMessageBox = new MessageBoxScreen("Congraulations! You escaped! Play again?") { Scale = .3f * Constants.Scale };
+                        escapedMessageBox.Accepted += closeGameplay;
+                        escapedMessageBox.Cancelled += closeGameplay;
+                        ScreenManager.AddScreen(escapedMessageBox, null);
+                    }
+                    else
+                    {
+                        var enemiesDeadMessageBox = new MessageBoxScreen("Good Job! You defeated all the enemies!") { Scale = .3f * Constants.Scale };
+                        //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK, MessageBoxIcon.None);
 
-                    enemiesDeadMessageBox.Accepted += handleEnemiesDead;
-                    enemiesDeadMessageBox.Cancelled += closeGameplay;
+                        enemiesDeadMessageBox.Accepted += handleEnemiesDead;
+                        enemiesDeadMessageBox.Cancelled += closeGameplay;
 
-                    ScreenManager.AddScreen(enemiesDeadMessageBox, null);
+                        ScreenManager.AddScreen(enemiesDeadMessageBox, null);
+                    }
+                    
                 }
 
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed
