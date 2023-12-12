@@ -163,15 +163,20 @@ namespace FinalGame.Entities
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (Phasing) color = Color.MediumPurple;
+            if (Phasing)
+            {
+                if (burst) color = Color.Lerp(Color.MediumPurple, Color.White, .1f);
+                else color = Color.MediumPurple;
+            }
+
             if (Alive)
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation,
-                new Vector2(Radius / Constants.Scale, Radius / Constants.Scale), Constants.Scale, SpriteEffects.None, 1);
+                new Vector2(Radius / Constants.Scale, Radius / Constants.Scale), Constants.Scale, SpriteEffects.None, .9f);
                 if (burst)
                 {
                     spriteBatch.Draw(Texture2, Bounds.Center, null, color, Rotation,
-                        new Vector2(Texture2.Height/2), Constants.Scale * .22f, SpriteEffects.None, 1);
+                        new Vector2(Texture2.Height / 2), Constants.Scale * .22f, SpriteEffects.None, 1f);
                 }
             }
 

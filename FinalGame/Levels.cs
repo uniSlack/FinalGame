@@ -48,7 +48,15 @@ namespace FinalGame
                 new Wall(new Vector2(400, 120), true, 240, 30),
                 new Wall(new Vector2(500, 120), true, 240, 30),
                 new Wall(new Vector2(600, 120), true, 240, 30)
-            }
+            },
+            new List<Wall>()
+            {
+                new Wall(new Vector2(450, 0), true, 100, 30),
+                new Wall(new Vector2(450, 100), false, 100, 30),
+                new Wall(new Vector2(200, 120), true, 240, 30),
+                new Wall(new Vector2(450, 360), true, 100, 30),
+                new Wall(new Vector2(450, 330), false, 100, 30)
+            },
 
         };
 
@@ -57,6 +65,7 @@ namespace FinalGame
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(400, 240)),
+                new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240))
@@ -78,9 +87,9 @@ namespace FinalGame
                     return new List<Enemy>()
                     {
                         new Enemy(new Vector2(40, 40), 0f, player, null),
-                        new Enemy(new Vector2(40, 440), 0f, player, null) { BulletCooldownTimer = 1},
+                        new Enemy(new Vector2(40, 420), 0f, player, null) { BulletCooldownTimer = 1},
                         new Enemy(new Vector2(760, 40), 0f, player, null) { BulletCooldownTimer = 2},
-                        new Enemy(new Vector2(760, 440), 0f, player, null) { BulletCooldownTimer = 4}
+                        new Enemy(new Vector2(760, 420), 0f, player, null) { BulletCooldownTimer = 4}
                     };
                 case 3:
                     return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, new List<Vector2>()
@@ -97,6 +106,20 @@ namespace FinalGame
                     return new List<Enemy>() { new Enemy(new Vector2(700, 240), 0f, player, null) { burst = true } };
                 case 5:
                     return new List<Enemy>() { new Enemy(new Vector2(700, 240), 0f, player, null) { Phasing = true } };
+                case 6:
+                    return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, new List<Vector2>()
+                    {
+                        new Vector2(700, 220),
+                        new Vector2(700, 100)
+                    }),
+                    new Enemy(new Vector2(700, 240), 0f, player, new List<Vector2>()
+                    {
+                        new Vector2(700, 240),
+                        new Vector2(700, 360),
+                    }),
+                        new Enemy(new Vector2(520, 40), 0f, player, null) { Phasing = true, burst = true },
+                        new Enemy(new Vector2(520, 420), 0f, player, null) { Phasing = true, burst = true }
+                    };
                 default:
                     return new List<Enemy>();
             }
