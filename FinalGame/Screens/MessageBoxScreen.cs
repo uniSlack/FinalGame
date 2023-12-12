@@ -25,8 +25,8 @@ namespace FinalGame.Screens
         // "A=ok, B=cancel" usage text prompt.
         public MessageBoxScreen(string message, bool includeUsageText = true)
         {
-            const string usageText = "\nSpace, Enter = ok" +
-                                     "\nBackspace = cancel";
+            const string usageText = "\nSpace, Enter = Continue" +
+                                     "\nBackspace = Exit";
 
             if (includeUsageText)
                 _message = message + usageText;

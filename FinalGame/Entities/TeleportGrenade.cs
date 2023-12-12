@@ -20,7 +20,7 @@ namespace FinalGame.Entities
         public bool Fired = false;
         public Player Player;
 
-        int radius = 5;
+        int radius = 10;
 
         public void FireGrenade(Vector2 position, Vector2 velocity)
         {
@@ -74,7 +74,7 @@ namespace FinalGame.Entities
         {
             //TODO change color based on if you can tele?
             spriteBatch.Draw(texture, Bounds.Center, null, Color.White, 0,
-                new Vector2(radius + (radius * .10f)), .10f * Constants.Scale, SpriteEffects.None, 1);
+                new Vector2(radius * Constants.Scale), .1f * Constants.Scale, SpriteEffects.None, 1);
         }
 
         public Vector2 teleport()

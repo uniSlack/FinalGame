@@ -155,7 +155,7 @@ namespace FinalGame.Screens
             {
                 if (player.Health <= 0)
                 {
-                    var playerDiedMessageBox = new MessageBoxScreen("Game Over! Good luck next time!") { Scale = .3f };
+                    var playerDiedMessageBox = new MessageBoxScreen("Game Over! Good luck next time!") { Scale = .3f  * Constants.Scale };
                     playerDiedMessageBox.Accepted += closeGameplay;
                     playerDiedMessageBox.Cancelled += closeGameplay;
                     ScreenManager.AddScreen(playerDiedMessageBox, null);
@@ -163,7 +163,7 @@ namespace FinalGame.Screens
 
                 if (!enemiesAlive)
                 {
-                    var enemiesDeadMessageBox = new MessageBoxScreen("Good Job! You defeated all the enemies!") { Scale = .3f };
+                    var enemiesDeadMessageBox = new MessageBoxScreen("Good Job! You defeated all the enemies!") { Scale = .3f * Constants.Scale };
                     //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Good Job! You defeated all the enemies!", "You Won!", MessageBoxButtons.OK, MessageBoxIcon.None);
 
                     enemiesDeadMessageBox.Accepted += handleEnemiesDead;
@@ -173,7 +173,7 @@ namespace FinalGame.Screens
                 }
 
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed
-                    || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape)) ScreenManager.Game.Exit();
+                    || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape)) OnCancel(0);
 
 
                 player.Update(gameTime, walls);
@@ -185,6 +185,22 @@ namespace FinalGame.Screens
                     if (e.Alive) enemiesAlive = true;
                 }
             }
+        }
+
+        protected  void OnCancel(PlayerIndex playerIndex)
+        {
+            
+            const string message = "Are you sure you want to exit?";
+            var confirmExitMessageBox = new MessageBoxScreen(message) { Scale = .4f * Constants.Scale };
+
+            confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
+
+            ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
+        }
+
+        private void ConfirmExitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.Game.Exit();
         }
 
         public override void Draw(GameTime gameTime)

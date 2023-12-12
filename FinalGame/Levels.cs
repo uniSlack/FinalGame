@@ -59,7 +59,6 @@ namespace FinalGame
                 new Player(new Vector2(400, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
-                new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240))
         };
 

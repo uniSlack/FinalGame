@@ -32,7 +32,7 @@ namespace FinalGame.Screens
                 "Escape to quit\n" +
                 "Destroy all the red enemies before they shoot you three times to win.\n" +
                 "Good Luck!";
-            var tutorialMessageBox = new MessageBoxScreen(message) { Scale = .3f};
+            var tutorialMessageBox = new MessageBoxScreen(message) { Scale = .3f * Constants.Scale};
 
             ScreenManager.AddScreen(tutorialMessageBox, null);
         }
@@ -50,7 +50,7 @@ namespace FinalGame.Screens
             //    ScreenManager.Game.Exit();
             //}
             const string message = "Are you sure you want to exit?";
-            var confirmExitMessageBox = new MessageBoxScreen(message) { Scale = .4f};
+            var confirmExitMessageBox = new MessageBoxScreen(message) { Scale = .4f * Constants.Scale };
 
             confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
 
