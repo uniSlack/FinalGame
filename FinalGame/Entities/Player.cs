@@ -33,6 +33,7 @@ namespace FinalGame.Entities
         public float Rotation = 0;
 
         public int Radius = 20;
+        public int unscaledRadius = 20;
         public int Health = 3;
 
         public float colorBlinkTime = 10f;
@@ -47,7 +48,7 @@ namespace FinalGame.Entities
         public Player(Vector2 position)
         {
             Position = position * Constants.Scale;
-            //Radius = (int)((float)Radius * Constants.Scale);
+            Radius = (int)((float)Radius * Constants.Scale);
             Bounds = new BoundingCircle(Position, Radius);
 
             teleportGrenade = new TeleportGrenade();
@@ -62,7 +63,7 @@ namespace FinalGame.Entities
             priorMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
 
-            int speed = 3;
+            int speed = (int)(3f * Constants.Scale);
 
             Vector2 postitionChange = new Vector2(0, 0);
 
@@ -160,7 +161,7 @@ namespace FinalGame.Entities
             if (color != Color.White)
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, Color.Lerp(Color.White, color, colorBlinkTimer/colorBlinkTime), Rotation,
-                new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
+                new Vector2(unscaledRadius, unscaledRadius), Constants.Scale, SpriteEffects.None, 1);
                 colorBlinkTimer -= .5f;
                 if (colorBlinkTimer <= 0 || color == Color.White) 
                 {
@@ -171,7 +172,7 @@ namespace FinalGame.Entities
             else
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation,
-                new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
+                new Vector2(unscaledRadius, unscaledRadius), Constants.Scale, SpriteEffects.None, 1);
             }
             
 

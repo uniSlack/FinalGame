@@ -59,6 +59,7 @@ namespace FinalGame
                 new Player(new Vector2(400, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
+                new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240))
         };
 
@@ -67,7 +68,7 @@ namespace FinalGame
             switch (level)
             {
                 case 0:
-                    return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, null) };
+                    return new List<Enemy>() { new Enemy(new Vector2(700, 240), 0f, player, null) };
                 case 1:
                     return new List<Enemy>() 
                     {
@@ -94,9 +95,9 @@ namespace FinalGame
                         new Vector2(700, 360)
                     }) };
                 case 4:
-                    return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, null) { burst = true } };
+                    return new List<Enemy>() { new Enemy(new Vector2(700, 240), 0f, player, null) { burst = true } };
                 case 5:
-                    return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, null) { Phasing = true } };
+                    return new List<Enemy>() { new Enemy(new Vector2(700, 240), 0f, player, null) { Phasing = true } };
                 default:
                     return new List<Enemy>();
             }

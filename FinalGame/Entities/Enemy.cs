@@ -18,6 +18,7 @@ namespace FinalGame.Entities
     {
         public bool Alive;
         public Texture2D Texture;
+        public Texture2D Texture2;
         public Vector2 Position { get; set; }
         public List<Vector2> Path;
         int currentStep = 0;
@@ -52,6 +53,7 @@ namespace FinalGame.Entities
 
         public Enemy(Vector2 position, float rotation, Player player, List<Vector2> path)
         {
+            Radius = (int)((float)Radius * Constants.Scale);
             Player = player;
             Position = position * Constants.Scale;
             Rotation = rotation;
@@ -159,7 +161,12 @@ namespace FinalGame.Entities
             if (Alive)
             {
                 spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation,
-                new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
+                new Vector2(Radius / Constants.Scale, Radius / Constants.Scale), Constants.Scale, SpriteEffects.None, 1);
+                if (burst)
+                {
+                    spriteBatch.Draw(Texture2, Bounds.Center, null, color, Rotation,
+                        new Vector2(Texture2.Height/2), Constants.Scale * .22f, SpriteEffects.None, 1);
+                }
             }
 
             foreach(Bullet b in Bullets) if (b.Fired) b.Draw(gameTime, spriteBatch);

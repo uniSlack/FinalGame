@@ -32,6 +32,8 @@ namespace FinalGame.Entities
         public Attack(Player p)
         {
             player = p;
+            BeamWidth = (int)((float)BeamWidth * Constants.Scale);
+            BeamLength = (int)((float)BeamLength * Constants.Scale);
         }
 
         public void StartAttack(Vector2 mouse)
@@ -61,7 +63,7 @@ namespace FinalGame.Entities
                 null,
                 Color.White,
                 Rotation - (float)Math.PI / 2,
-                new Vector2(0, -(player.Radius * beamDistatnceFromPlayerScalar)),
+                new Vector2(0, -(player.unscaledRadius * beamDistatnceFromPlayerScalar)),
                 SpriteEffects.None,
                 1
                 );

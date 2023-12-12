@@ -18,6 +18,7 @@ namespace FinalGame.Entities
         public Vector2 Velocity { get; set; }
         public bool Fired = false;
         public float speed = 1;
+        public float baseSpeed = 1;
         public Player Player;
 
         public Color color = Color.Red;
@@ -31,6 +32,7 @@ namespace FinalGame.Entities
             Bounds = new BoundingCircle(position, radius);
             Position = position;
             Velocity = velocity;
+            speed = baseSpeed * Constants.Scale;
             Fired = true;
         }
 
@@ -52,8 +54,8 @@ namespace FinalGame.Entities
             Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds * speed;
             Bounds.Center = Position;
 
-            if (Position.X < radius || Position.X > Constants.GAME_WIDTH - radius
-                || Position.Y < radius || Position.Y > Constants.GAME_HEIGHT - radius)
+            if (Position.X < radius || Position.X > Constants.DISPLAY_WIDTH - radius
+                || Position.Y < radius || Position.Y > Constants.DISPLAY_HEIGHT - radius)
             {
                 //TODO break anim
                 Fired = false;

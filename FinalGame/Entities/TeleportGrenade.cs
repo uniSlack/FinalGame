@@ -24,8 +24,8 @@ namespace FinalGame.Entities
 
         public void FireGrenade(Vector2 position, Vector2 velocity)
         {
-            Bounds = new BoundingCircle(position, radius);
             Position = position;
+            Bounds = new BoundingCircle(Position, radius * Constants.Scale);
             Velocity = velocity;
             Fired = true;
         }
@@ -74,7 +74,7 @@ namespace FinalGame.Entities
         {
             //TODO change color based on if you can tele?
             spriteBatch.Draw(texture, Bounds.Center, null, Color.White, 0,
-                new Vector2(radius, radius), .10f, SpriteEffects.None, 1);
+                new Vector2(radius + (radius * .10f)), .10f * Constants.Scale, SpriteEffects.None, 1);
         }
 
         public Vector2 teleport()

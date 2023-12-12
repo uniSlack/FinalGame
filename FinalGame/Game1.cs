@@ -55,7 +55,7 @@ namespace FinalGame
             if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.AspectRatio == 5f / 3f ||
                 GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.AspectRatio == 16f / 9f)
             {
-                _graphics.IsFullScreen = true;   
+                //_graphics.IsFullScreen = true;   
                 _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                 _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                 Constants.Scale = (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)Constants.GAME_WIDTH;

@@ -87,6 +87,7 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Texture = Content.Load<Texture2D>("Circle4");
+                e.Texture2 = Content.Load<Texture2D>("WhiteTexture");
                 foreach(Bullet b in e.Bullets) b.texture = Content.Load<Texture2D>("WhiteRedProjectile");
                 e.DeathSoundEffect = Content.Load<SoundEffect>("TempExplosion");
             }
