@@ -33,7 +33,7 @@ namespace FinalGame.Screens
                 "Escape to quit\n" +
                 "Destroy all the red enemies before they shoot you three times to win.\n" +
                 "Good Luck!";
-            var tutorialMessageBox = new MessageBoxScreen(message) { Scale = .3f * Constants.Scale};
+            var tutorialMessageBox = new MessageBoxScreen(message) { Scale = .2f * Constants.Scale};
 
             ScreenManager.AddScreen(tutorialMessageBox, null);
         }
