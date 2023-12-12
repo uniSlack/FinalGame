@@ -40,7 +40,16 @@ namespace FinalGame
             new List<Wall>()
             {
                 new Wall(new Vector2(200, 120), true, 240, 30)
+            },
+            new List<Wall>()
+            {
+                new Wall(new Vector2(200, 120), true, 240, 30),
+                new Wall(new Vector2(300, 120), true, 240, 30),
+                new Wall(new Vector2(400, 120), true, 240, 30),
+                new Wall(new Vector2(500, 120), true, 240, 30),
+                new Wall(new Vector2(600, 120), true, 240, 30)
             }
+
         };
 
         public List<Player> PlayerPerLevel = new List<Player>()
@@ -48,6 +57,7 @@ namespace FinalGame
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(400, 240)),
+                new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240))
         };
@@ -85,6 +95,8 @@ namespace FinalGame
                     }) };
                 case 4:
                     return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, null) { burst = true } };
+                case 5:
+                    return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, null) { Phasing = true } };
                 default:
                     return new List<Enemy>();
             }

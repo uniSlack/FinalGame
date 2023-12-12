@@ -87,7 +87,7 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Texture = Content.Load<Texture2D>("Circle4");
-                foreach(Bullet b in e.Bullets) b.texture = Content.Load<Texture2D>("TeleportGrenade");
+                foreach(Bullet b in e.Bullets) b.texture = Content.Load<Texture2D>("WhiteRedProjectile");
                 e.DeathSoundEffect = Content.Load<SoundEffect>("TempExplosion");
             }
 
@@ -206,7 +206,7 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Draw(gameTime, spriteBatch);
-                if (e.Alive) grid.Draw2(spriteBatch, e.Position, Color.Red, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
+                if (e.Alive) grid.Draw2(spriteBatch, e.Position, e.color, new Texture2D(ScreenManager.GraphicsDevice, 200, 200));
             }
 
             healthBar.Draw(spriteBatch, player.Health);

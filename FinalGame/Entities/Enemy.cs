@@ -35,11 +35,16 @@ namespace FinalGame.Entities
         public double BulletCooldownTimer;
         double BulletCooldownLength = 3;
         int BulletSpeed = 450;
+
         public bool burst = false;
         int bulletsFired = 0;
         public int burstNumber = 3;
         public double BurstShotSeperationLength = .1f;
         public double BurstShotSeperationTimer = 0;
+
+        public bool Phasing;
+
+        public Color color = Color.Red;
 
         public SoundEffect DeathSoundEffect;
 
@@ -55,6 +60,7 @@ namespace FinalGame.Entities
             {
                 Bullets.Add(new Bullet());
             }
+            
             BulletCooldownTimer = BulletCooldownLength;
             Alive = true;
             if (path != null) Path = path;
@@ -69,6 +75,11 @@ namespace FinalGame.Entities
 
         public void Update(GameTime gameTime, List<Wall> walls)
         {
+            if (Phasing) foreach (Bullet b in Bullets)
+                {
+                    b.Phasing = true;
+                    b.speed = .6f;
+                }
             if (Path != null)
             {
                 if (Position == Path[nextStep])
@@ -144,9 +155,10 @@ namespace FinalGame.Entities
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (Phasing) color = Color.MediumPurple;
             if (Alive)
             {
-                spriteBatch.Draw(Texture, Bounds.Center, null, Color.Red, Rotation,
+                spriteBatch.Draw(Texture, Bounds.Center, null, color, Rotation,
                 new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
             }
 

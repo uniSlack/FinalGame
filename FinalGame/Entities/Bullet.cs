@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Drawing.Drawing2D;
 
 namespace FinalGame.Entities
 {
@@ -16,7 +17,11 @@ namespace FinalGame.Entities
         public BoundingCircle Bounds;
         public Vector2 Velocity { get; set; }
         public bool Fired = false;
+        public float speed = 1;
         public Player Player;
+
+        public Color color = Color.Red;
+        public bool Phasing;
 
         int radius = 5;
 
@@ -31,16 +36,20 @@ namespace FinalGame.Entities
 
         public void Update(GameTime gameTime, List<Wall> walls)
         {
-            foreach (Wall w in walls)
+            if (!Phasing)
             {
-                if (Bounds.CollidesWith(w.Bounds))
+                foreach (Wall w in walls)
                 {
-                    //TODO break anim
-                    Fired = false;
+                    if (Bounds.CollidesWith(w.Bounds))
+                    {
+                        //TODO break anim
+                        Fired = false;
+                    }
                 }
             }
+            
 
-            Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds * speed;
             Bounds.Center = Position;
 
             if (Position.X < radius || Position.X > Constants.GAME_WIDTH - radius
@@ -56,14 +65,12 @@ namespace FinalGame.Entities
                 Fired = false;
                 Bounds = new BoundingCircle();
             }
-
-
-            //Velocity /= 1.01f;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Bounds.Center, null, Color.White, 0,
+            if (Phasing) color = Color.MediumPurple;
+            spriteBatch.Draw(texture, Bounds.Center, null, color, 0,
                 new Vector2(radius, radius), 1f, SpriteEffects.None, 1);
         }
     }
