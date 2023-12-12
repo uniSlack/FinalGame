@@ -25,7 +25,7 @@ namespace FinalGame.Entities
         public TeleportGrenade teleportGrenade;
         public Attack attack;
 
-        KeyboardState keyboardState;
+        KeyboardState currentKeyboardState;
         MouseState currentMouseState;
         MouseState priorMouseState;
 
@@ -56,8 +56,8 @@ namespace FinalGame.Entities
 
         public void HandleInput(GameTime gameTime, InputState input, List<Wall> walls)
         {
-
-            keyboardState = Keyboard.GetState();
+            var priorKeyBoardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
             priorMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
 
@@ -65,13 +65,13 @@ namespace FinalGame.Entities
 
             Vector2 postitionChange = new Vector2(0, 0);
 
-            if ((keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+            if ((currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
                 && Position.Y > Radius) postitionChange += new Vector2(0, -speed);
-            if ((keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+            if ((currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
                 && Position.Y < Constants.GAME_HEIGHT - Radius) postitionChange += new Vector2(0, speed);
-            if ((keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+            if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A))
                 && Position.X > Radius) postitionChange += new Vector2(-speed, 0);
-            if ((keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            if ((currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
                 && Position.X < Constants.GAME_WIDTH - Radius) postitionChange += new Vector2(speed, 0);
 
             Position += postitionChange;
@@ -102,7 +102,8 @@ namespace FinalGame.Entities
             if (teleportGrenade.Fired)
             {
                 teleportGrenade.Update(gameTime, walls);
-                if (currentMouseState.RightButton == ButtonState.Pressed && priorMouseState.RightButton == ButtonState.Released)
+                if (currentMouseState.RightButton == ButtonState.Pressed && priorMouseState.RightButton == ButtonState.Released 
+                    || priorKeyBoardState.IsKeyDown(Keys.LeftShift) && currentKeyboardState.IsKeyUp(Keys.LeftShift))
                 {
                     Vector2 potentialPosition = teleportGrenade.teleport();
                     BoundingCircle potentialBounds = new BoundingCircle(potentialPosition, Radius);
@@ -131,7 +132,8 @@ namespace FinalGame.Entities
                     Position = potentialPosition;
                 }
             }
-            else if (currentMouseState.RightButton == ButtonState.Pressed && priorMouseState.RightButton == ButtonState.Released)
+            else if (currentMouseState.RightButton == ButtonState.Pressed && priorMouseState.RightButton == ButtonState.Released
+                || priorKeyBoardState.IsKeyDown(Keys.LeftShift) && currentKeyboardState.IsKeyUp(Keys.LeftShift))
             {
                 teleportGrenade.FireGrenade(
                     Position + Vector2.Normalize(mouseDirection) * 20,

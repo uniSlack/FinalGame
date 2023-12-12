@@ -26,7 +26,7 @@ namespace FinalGame.Screens
             string message = "WASD/Arrows to move\n" +
                 "Left click to attack\n" +
                 "Mouse to aim\n" +
-                "Right click to throw teleport grenade, right click again to teleport to it\n" +
+                "Right click or left shift to throw teleport grenade, press again to teleport to it\n" +
                 "Be warned, you can only teleport where you fit!\n" +
                 "Tab to skip levels\n" +
                 "Escape to quit\n" +
