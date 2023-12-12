@@ -11,11 +11,12 @@ namespace FinalGame.Screens
             var playGameMenuEntry = new MenuEntry("Play Game");
             var howToPlayMenuEntry = new MenuEntry("How To Play");
             var exitMenuEntry = new MenuEntry("Exit");
-
+            
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             howToPlayMenuEntry.Selected += HowToPlayMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
+            
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(howToPlayMenuEntry);
             MenuEntries.Add(exitMenuEntry);

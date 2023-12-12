@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using FinalGame.StateManagement;
+using SharpDX.Direct2D1.Effects;
 
 namespace FinalGame.Screens
 {
@@ -147,6 +148,19 @@ namespace FinalGame.Screens
 
             spriteBatch.Begin();
 
+            string loreMessage =
+                "After the AI overlords claimed the cyber net as theirs.\n" +
+                "No one has been able to survive online, at least not for long \n" +
+                "You promised you were out, But it's time for one last job\n" +
+                "Can you escape from this hole you've dug for yourself?\n" +
+                "Can you return to your flesh and blood body in one piece?\n" +
+                "Can you...";
+
+            spriteBatch.DrawString(font, loreMessage, 
+                new Vector2(graphics.Viewport.Width / 2, (font.MeasureString(loreMessage).Y /2) + 30)
+                , Color.White, 0,
+                font.MeasureString(loreMessage) / 2, .3f * Constants.Scale, SpriteEffects.None, 0);
+
             for (int i = 0; i < _menuEntries.Count; i++)
             {
                 var menuEntry = _menuEntries[i];
@@ -160,10 +174,10 @@ namespace FinalGame.Screens
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // Draw the menu title centered on the screen
-            var titlePosition = new Vector2(graphics.Viewport.Width / 2, 80);
+            var titlePosition = new Vector2(graphics.Viewport.Width / 2, (graphics.Viewport.Height / 2));
             var titleOrigin = font.MeasureString(_menuTitle) / 2;
             var titleColor = new Color(192, 192, 192) * TransitionAlpha;
-            const float titleScale = 1.25f;
+            const float titleScale = 2.25f;
 
             titlePosition.Y -= transitionOffset * 100;
 

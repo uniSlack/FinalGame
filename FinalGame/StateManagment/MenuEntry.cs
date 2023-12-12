@@ -72,7 +72,7 @@ namespace FinalGame.Screens
 
             var origin = new Vector2(0, font.LineSpacing / 2);
 
-            spriteBatch.DrawString(font, _text, _position, color, 0,
+            spriteBatch.DrawString(font, _text, _position + new Vector2(0, Constants.DISPLAY_HEIGHT/2), color, 0,
                 origin, scale, SpriteEffects.None, 0);
         }
 
