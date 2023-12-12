@@ -65,7 +65,12 @@ namespace FinalGame.Entities
             
             BulletCooldownTimer = BulletCooldownLength;
             Alive = true;
-            if (path != null) Path = path;
+            if (path != null)
+            {
+                List<Vector2> temp = new List<Vector2>();
+                foreach (Vector2 v  in path) temp.Add( v * Constants.Scale);
+                Path = temp;
+            }
         }
 
         private void IncrementStep()
@@ -84,7 +89,8 @@ namespace FinalGame.Entities
                 }
             if (Path != null)
             {
-                if (Position == Path[nextStep])
+                if (Position.X <= Path[nextStep].X + 10 && Position.X >= Path[nextStep].X - 10 &&
+                    Position.Y <= Path[nextStep].Y + 10 && Position.Y >= Path[nextStep].Y - 10)
                 {
                     IncrementStep();
                 }

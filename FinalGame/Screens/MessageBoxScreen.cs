@@ -26,7 +26,7 @@ namespace FinalGame.Screens
         public MessageBoxScreen(string message, bool includeUsageText = true)
         {
             const string usageText = "\nSpace, Enter = Continue" +
-                                     "\nBackspace = Exit";
+                                     "\nBackspace = Back";
 
             if (includeUsageText)
                 _message = message + usageText;

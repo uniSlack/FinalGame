@@ -44,11 +44,6 @@ namespace FinalGame.Screens
 
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Are you sure you want to exit?", "Message", MessageBoxButtons.OKCancel, MessageBoxIcon.None);//end game;
-            //if (dialogResult == DialogResult.OK)
-            //{
-            //    ScreenManager.Game.Exit();
-            //}
             const string message = "Are you sure you want to exit?";
             var confirmExitMessageBox = new MessageBoxScreen(message) { Scale = .4f * Constants.Scale };
 
