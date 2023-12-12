@@ -28,7 +28,7 @@ namespace FinalGame.Screens
                 "Mouse to aim\n" +
                 "Right click to throw teleport grenade, right click again to teleport to it\n" +
                 "Be warned, you can only teleport where you fit!\n" +
-                "Space to skip levels\n" +
+                "Tab to skip levels\n" +
                 "Escape to quit\n" +
                 "Destroy all the red enemies before they shoot you three times to win.\n" +
                 "Good Luck!";

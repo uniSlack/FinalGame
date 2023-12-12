@@ -30,10 +30,16 @@ namespace FinalGame.Entities
         public int Radius = 20;
         public int Speed = 1;
 
-        public Bullet Bullet;
+        //public Bullet Bullet;
+        public List<Bullet> Bullets = new List<Bullet>();
         public double BulletCooldownTimer;
         double BulletCooldownLength = 3;
         int BulletSpeed = 450;
+        public bool burst = false;
+        int bulletsFired = 0;
+        public int burstNumber = 3;
+        public double BurstShotSeperationLength = .1f;
+        public double BurstShotSeperationTimer = 0;
 
         public SoundEffect DeathSoundEffect;
 
@@ -45,7 +51,10 @@ namespace FinalGame.Entities
             Position = position;
             Rotation = rotation;
             Bounds = new BoundingCircle(Position, Radius);
-            Bullet = new Bullet();
+            for (int i = 0; i <= burstNumber; i++)
+            {
+                Bullets.Add(new Bullet());
+            }
             BulletCooldownTimer = BulletCooldownLength;
             Alive = true;
             if (path != null) Path = path;
@@ -62,12 +71,6 @@ namespace FinalGame.Entities
         {
             if (Path != null)
             {
-                //if (
-                //    (Position.X <= Path[nextStep].X + 5 &&
-                //    Position.X >= Path[nextStep].X - 5 ) &&
-                //    (Position.Y <= Path[nextStep].X + 5 &&
-                //    Position.Y >= Path[nextStep].X - 5)
-                //    )
                 if (Position == Path[nextStep])
                 {
                     IncrementStep();
@@ -77,12 +80,10 @@ namespace FinalGame.Entities
                 potentialPosition *= Speed;
                 Position += potentialPosition;
                 Bounds.Center = Position;
-
-
             }
 
-                // end movement
-                Vector2 playerToEnemy = new Vector2(Position.X - Player.Position.X, Position.Y - Player.Position.Y);
+            // end movement
+            Vector2 playerToEnemy = new Vector2(Position.X - Player.Position.X, Position.Y - Player.Position.Y);
             Rotation = (float)Math.Atan2(playerToEnemy.Y, playerToEnemy.X) + (float)Math.PI;
 
             // check attack collision
@@ -98,18 +99,46 @@ namespace FinalGame.Entities
                 }
             }
 
-            if (BulletCooldownTimer <= 0 && Alive)
+            if (burst)
             {
-                Bullet.FireBullet(Position, Vector2.Normalize(new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y)) * BulletSpeed, Player);
-                BulletCooldownTimer = BulletCooldownLength;
-            }
-            else if (Bullet.Fired)
-            {
-                Bullet.Update(gameTime, walls);
+                if (BulletCooldownTimer <= 0 && Alive)
+                {
+                    if(bulletsFired < burstNumber)
+                    {
+                        if (BurstShotSeperationTimer <= 0)
+                        {
+                            Bullets[bulletsFired].FireBullet(Position, Vector2.Normalize(new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y)) * BulletSpeed, Player);
+                            BurstShotSeperationTimer = BurstShotSeperationLength;
+                            bulletsFired++;
+                            if (bulletsFired >= burstNumber)
+                            {
+                                BulletCooldownTimer = BulletCooldownLength;
+                                bulletsFired = 0;
+                            }
+                        }
+                        else BurstShotSeperationTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+                    else BulletCooldownTimer = BulletCooldownLength;
+                }
+                else BulletCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+
+                foreach (Bullet b in Bullets) if (b.Fired) b.Update(gameTime, walls);
             }
             else
             {
-                BulletCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (BulletCooldownTimer <= 0 && Alive)
+                {
+                    Bullets[0].FireBullet(Position, Vector2.Normalize(new Vector2(Player.Position.X - Position.X, Player.Position.Y - Position.Y)) * BulletSpeed, Player);
+                    BulletCooldownTimer = BulletCooldownLength;
+                }
+                else if (Bullets[0].Fired)
+                {
+                    Bullets[0].Update(gameTime, walls);
+                }
+                else
+                {
+                    BulletCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                }
             }
         }
 
@@ -121,7 +150,7 @@ namespace FinalGame.Entities
                 new Vector2(Radius, Radius), 1, SpriteEffects.None, 1);
             }
 
-            if (Bullet.Fired) Bullet.Draw(gameTime, spriteBatch);
+            foreach(Bullet b in Bullets) if (b.Fired) b.Draw(gameTime, spriteBatch);
         }
 
         public void Hit()

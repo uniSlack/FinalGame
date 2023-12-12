@@ -87,7 +87,7 @@ namespace FinalGame.Screens
             foreach (Enemy e in Enemies)
             {
                 e.Texture = Content.Load<Texture2D>("Circle4");
-                e.Bullet.texture = Content.Load<Texture2D>("TeleportGrenade");
+                foreach(Bullet b in e.Bullets) b.texture = Content.Load<Texture2D>("TeleportGrenade");
                 e.DeathSoundEffect = Content.Load<SoundEffect>("TempExplosion");
             }
 
@@ -247,8 +247,8 @@ namespace FinalGame.Screens
             // on PC if they are playing with a keyboard and have no gamepad at all!
             bool gamePadDisconnected = !gamePadState.IsConnected && input.GamePadWasConnected[playerIndex];
 
-            if (currentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space) &&
-                !priorKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (currentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Tab) &&
+                !priorKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Tab))
             {
                 if (CurrentLevel < levels.PlayerPerLevel.Count - 1)
                 {

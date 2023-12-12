@@ -11,7 +11,7 @@ namespace FinalGame
 {
     public class Levels
     {
-        public int TotalLevels = 2;
+        public int TotalLevels = 5;
 
         public List<List<Wall>> WallsPerLevel = new List<List<Wall>>()
         {
@@ -33,8 +33,13 @@ namespace FinalGame
             },
             new List<Wall>()
             {
-                new Wall(new Vector2(600, 0), true, 220, 30),
-                new Wall(new Vector2(600, 260), true, 220, 30)
+                new Wall(new Vector2(600, 0), true, 100, 30),
+                new Wall(new Vector2(200, 120), true, 240, 30),
+                new Wall(new Vector2(600, 380), true, 100, 30)
+            },
+            new List<Wall>()
+            {
+                new Wall(new Vector2(200, 120), true, 240, 30)
             }
         };
 
@@ -43,6 +48,7 @@ namespace FinalGame
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240)),
                 new Player(new Vector2(400, 240)),
+                new Player(new Vector2(100, 240)),
                 new Player(new Vector2(100, 240))
         };
 
@@ -71,7 +77,14 @@ namespace FinalGame
                     {
                         new Vector2(700, 220),
                         new Vector2(700, 100)
+                    }),
+                    new Enemy(new Vector2(700, 240), 0f, player, new List<Vector2>()
+                    {
+                        new Vector2(700, 240),
+                        new Vector2(700, 360)
                     }) };
+                case 4:
+                    return new List<Enemy>() { new Enemy(new Vector2(700, 220), 0f, player, null) { burst = true } };
                 default:
                     return new List<Enemy>();
             }
