@@ -51,7 +51,7 @@ namespace FinalGame
 
             blankTexture.SetData<Color>(grid);
             spriteBatch.Draw(blankTexture, position * Constants.Scale, null, color, 0,
-                new Vector2(w / 2, h / 2), 1, SpriteEffects.None, 0);
+                new Vector2(w / 2, h / 2), 1 * Constants.Scale, SpriteEffects.None, 0);
         }
     }
 }
